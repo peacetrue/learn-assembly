@@ -1,19 +1,23 @@
 #使用 bochs 调试程序
+# https://bochs.sourceforge.io/cgi-bin/topper.pl?name=New+Bochs+Documentation&url=https://bochs.sourceforge.io/doc/docbook/user/index.html
 
 # 创建一个磁盘镜像
 $(BUILD)/%.img: $(BUILD)
 	yes | bximage -q -func=create -hd=16 -sectsize=512 -imgmode=flat $@;
 
 # 将程序代码拷贝到磁盘镜像中
-copy.bin.img.%: $(BUILD)/%.bin $(BUILD)/%.img
+bochs.copy.%: $(BUILD)/%.bin $(BUILD)/%.img
 	dd if=$< of=$(word 2,$^) bs=512 count=1 seek=0 conv=notrunc;
+
+bochs.display_library:=$(if $(is_mac),sdl2,nogui)
 
 # 配置 bochs 引导使用的磁盘
 $(BUILD)/%.bochsrc: $(BUILD)/%.img
 	echo "boot: disk" > $@
 #	echo "ata0-master: type=disk, path=$<, mode=flat, cylinders=1, heads=1, spt=1" >> $@
 	echo "ata0-master: type=disk, path=$<, mode=flat" >> $@
-	echo "display_library: sdl2" >> $@
+	echo "display_library: $(bochs.display_library)" >> $@
+	echo "magic_break: enabled=1" >> $@
 
 # 配置 bochs 自动执行的指令
 $(BUILD)/%.bochi:
@@ -21,10 +25,11 @@ $(BUILD)/%.bochi:
 	echo "c" >> $@
 	echo "n" >> $@
 	echo "c" >> $@
+	echo "q" >> $@
 
 # 运行 bochs 调试
-bochs.run.%: $(BUILD)/%.bochsrc $(BUILD)/%.bochi copy.bin.img.%
+bochs.run.%: $(BUILD)/%.bochsrc $(BUILD)/%.bochi bochs.copy.%
 	bochs -q -f $< -rc $(word 2,$^) -log $(BUILD)/$*.bochs.log
 
 # clean/hello.bochsrc
-bochs.hello.case: bochs.run.hello;
+bochs.hello.case: clean/hello.bochsrc bochs.run.hello;

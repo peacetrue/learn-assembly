@@ -26,16 +26,18 @@ $(BUILD)/%.storageattach.cache: $(BUILD)/%.vbox.cache $(BUILD)/%.vhd
 	VBoxManage storageattach $* --storagectl=$* --port=0 --device=0 --type=hdd --medium $(shell pwd)/$(word 2,$^) || true
 
 # 将程序代码拷贝到虚拟硬盘中
-copy.bin.vhd.%: $(BUILD)/%.bin $(BUILD)/%.vhd
+vbox.copy.%: $(BUILD)/%.bin $(BUILD)/%.vhd
 	dd if=$< of=$(word 2,$^) bs=512 count=1 seek=0 conv=notrunc;
 
 # 运行虚拟机
-vbox.run.%: $(BUILD)/%.storageattach.cache copy.bin.vhd.%
+vbox.run.%: $(BUILD)/%.storageattach.cache vbox.copy.%
 	VBoxManage startvm $*
 
+# 运行 hello 案例
 vbox.hello.case: vbox.run.hello;
 
 vbox/clean/%: clean/%.*.cache clean/%.bin
 	VBoxManage unregistervm $* --delete
-vbox.clean.case: vbox/clean/label;
+# 清除所有案例
+vbox.clean.case: vbox/clean/hello;
 
