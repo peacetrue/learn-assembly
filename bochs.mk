@@ -33,8 +33,7 @@ $(BUILD)/%.debug.bochs.command: $(BUILD)
 # 运行 hello 案例
 bochs.hello.case: bochs.run.hello;
 bochs.run.%: $(BUILD)/%.bochsrc $(BUILD)/%.$(bochs_command_mode).bochs.command bochs.copy.%
-#	bochs -q -f $< -rc $(word 2,$^) -log $(BUILD)/$*.bochs.log
-	bochs -q -f $< -rc $(word 2,$^)
+	bochs -q -f $< -rc $(word 2,$^) -log $(BUILD)/$*.bochs.log
 
 # 清除所有案例
 bochs.clean.case: bochs.clean.hello;
