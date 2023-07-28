@@ -15,7 +15,7 @@ endif
 
 ifdef is_linux
 prepare.install.%:
-	apt install $* -y
+	sudo apt install $* -y
 endif
 
 # 生成帮助文档
@@ -28,3 +28,4 @@ $(prepare.partials)/%.adoc: prepare.install.%
 
 prepare.install.case: prepare.install.nasm prepare.install.bochs;
 prepare.case: $(prepare.partials)/nasm.adoc $(prepare.partials)/bochs.adoc $(prepare.partials)/VBoxManage.adoc $(prepare.partials)/objcopy.adoc;
+#
