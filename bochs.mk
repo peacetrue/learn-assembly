@@ -1,7 +1,7 @@
 #使用 bochs 调试程序
 
 # 创建一个磁盘镜像
-$(BUILD)/%.img:
+$(BUILD)/%.img: $(BUILD)
 	yes | bximage -q -func=create -hd=16 -sectsize=512 -imgmode=flat $@;
 
 # 将程序代码拷贝到磁盘镜像中
