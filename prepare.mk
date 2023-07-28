@@ -18,6 +18,9 @@ prepare.install.%:
 	sudo apt install $* -y
 endif
 
+prepare.check.%: prepare.install.%
+	$* -v
+
 # 生成帮助文档
 $(prepare.partials)/%.adoc: prepare.install.%
 	echo "= $*\n\n" > $@
@@ -26,6 +29,5 @@ $(prepare.partials)/%.adoc: prepare.install.%
 	$* -h >> $@
 	echo "----" >> $@
 
-prepare.install.case: prepare.install.nasm prepare.install.bochs;
+prepare.install.case: prepare.check.nasm prepare.check.bochs;
 prepare.case: $(prepare.partials)/nasm.adoc $(prepare.partials)/bochs.adoc $(prepare.partials)/VBoxManage.adoc $(prepare.partials)/objcopy.adoc;
-#
