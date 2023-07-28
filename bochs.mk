@@ -3,11 +3,11 @@
 
 # 创建一个磁盘镜像
 $(BUILD)/%.img: $(BUILD)
-	yes | bximage -q -func=create -hd=16 -sectsize=512 -imgmode=flat $@;
+	yes | bximage -q -func=create -hd=16 -sectsize=512 -imgmode=flat $@
 
 # 将程序代码拷贝到磁盘镜像中
 bochs.copy.%: $(BUILD)/%.bin $(BUILD)/%.img
-	dd if=$< of=$(word 2,$^) bs=512 count=1 seek=0 conv=notrunc;
+	dd if=$< of=$(word 2,$^) bs=512 count=1 seek=0 conv=notrunc
 
 bochs.display_library:=$(if $(is_mac),sdl2,rfb)
 # 配置 bochs 引导使用的磁盘
@@ -33,7 +33,8 @@ $(BUILD)/%.debug.bochsi:
 # 运行 hello 案例
 bochs.hello.case: bochs.run.hello;
 bochs.run.%: $(BUILD)/%.bochsrc $(BUILD)/%.$(bochsi_mode).bochsi bochs.copy.%
-	bochs -q -f $< -rc $(word 2,$^)# -log $(BUILD)/$*.bochs.log
+#	bochs -q -f $< -rc $(word 2,$^) -log $(BUILD)/$*.bochs.log
+	bochs -q -f $< -rc $(word 2,$^)
 
 # 清除所有案例
 bochs.clean.case: bochs.clean.hello;
