@@ -32,4 +32,4 @@ bochs.run.%: $(BUILD)/%.bochsrc $(BUILD)/%.bochi bochs.copy.%
 	bochs -q -f $< -rc $(word 2,$^) -log $(BUILD)/$*.bochs.log
 
 # clean/hello.bochsrc
-bochs.hello.case: clean/hello.bochsrc bochs.run.hello;
+bochs.hello.case: bochs.run.hello;
