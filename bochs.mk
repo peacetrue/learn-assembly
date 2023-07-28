@@ -9,8 +9,7 @@ $(BUILD)/%.img: $(BUILD)
 bochs.copy.%: $(BUILD)/%.bin $(BUILD)/%.img
 	dd if=$< of=$(word 2,$^) bs=512 count=1 seek=0 conv=notrunc;
 
-bochs.display_library:=$(if $(is_mac),sdl2,nogui)
-
+bochs.display_library:=$(if $(is_mac),sdl2,rfb)
 # 配置 bochs 引导使用的磁盘
 $(BUILD)/%.bochsrc: $(BUILD)/%.img
 	echo "boot: disk" > $@
@@ -20,6 +19,8 @@ $(BUILD)/%.bochsrc: $(BUILD)/%.img
 	echo "magic_break: enabled=1" >> $@
 
 # 配置 bochs 执行的指令
+## 默认 debug 模式
+bochsi_mode?=debug
 ## 执行模式
 $(BUILD)/%.run.bochsi:
 	echo "c" >> $@
@@ -28,15 +29,11 @@ $(BUILD)/%.run.bochsi:
 $(BUILD)/%.debug.bochsi:
 	echo "b 0x7c00" > $@
 	echo "c" >> $@
-#默认 debug 模式
-bochsi_mode?=debug
-
-# 运行 bochs
-bochs.run.%: $(BUILD)/%.bochsrc $(BUILD)/%.$(bochsi_mode).bochsi bochs.copy.%
-	bochs -q -f $< -rc $(word 2,$^) -log $(BUILD)/$*.bochs.log
 
 # 运行 hello 案例
 bochs.hello.case: bochs.run.hello;
+bochs.run.%: $(BUILD)/%.bochsrc $(BUILD)/%.$(bochsi_mode).bochsi bochs.copy.%
+	bochs -q -f $< -rc $(word 2,$^)# -log $(BUILD)/$*.bochs.log
 
 # 清除所有案例
 bochs.clean.case: bochs.clean.hello;
