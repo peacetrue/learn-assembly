@@ -36,8 +36,8 @@ vbox.run.%: $(BUILD)/%.storageattach.cache vbox.copy.%
 # 运行 hello 案例
 vbox.hello.case: vbox.run.hello;
 
-vbox/clean/%: clean/%.*.cache clean/%.bin
-	VBoxManage unregistervm $* --delete
 # 清除所有案例
 vbox.clean.case: vbox/clean/hello;
+vbox/clean/%: clean/%.*.cache clean/%.bin
+	VBoxManage unregistervm $* --delete
 

@@ -19,17 +19,25 @@ $(BUILD)/%.bochsrc: $(BUILD)/%.img
 	echo "display_library: $(bochs.display_library)" >> $@
 	echo "magic_break: enabled=1" >> $@
 
-# 配置 bochs 自动执行的指令
-$(BUILD)/%.bochi:
-	echo "b 0x7c00" > $@
-	echo "c" >> $@
-	echo "n" >> $@
+# 配置 bochs 执行的指令
+## 执行模式
+$(BUILD)/%.run.bochsi:
 	echo "c" >> $@
 	echo "q" >> $@
+## 调试模式
+$(BUILD)/%.debug.bochsi:
+	echo "b 0x7c00" > $@
+	echo "c" >> $@
+#默认 debug 模式
+bochsi_mode?=debug
 
-# 运行 bochs 调试
-bochs.run.%: $(BUILD)/%.bochsrc $(BUILD)/%.bochi bochs.copy.%
+# 运行 bochs
+bochs.run.%: $(BUILD)/%.bochsrc $(BUILD)/%.$(bochsi_mode).bochsi bochs.copy.%
 	bochs -q -f $< -rc $(word 2,$^) -log $(BUILD)/$*.bochs.log
 
-# clean/hello.bochsrc
+# 运行 hello 案例
 bochs.hello.case: bochs.run.hello;
+
+# 清除所有案例
+bochs.clean.case: bochs.clean.hello;
+bochs.clean.%: clean/%.bin clean/%.img clean/%*bochs*;
