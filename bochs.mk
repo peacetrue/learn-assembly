@@ -9,30 +9,30 @@ $(BUILD)/%.img: $(BUILD)
 bochs.copy.%: $(BUILD)/%.bin $(BUILD)/%.img
 	dd if=$< of=$(word 2,$^) bs=512 count=1 seek=0 conv=notrunc
 
-bochs.display_library:=$(if $(is_mac),sdl2,rfb)
+bochs_display_library?=$(if $(is_mac),sdl2,rfb)
 # 配置 bochs 引导使用的磁盘
 $(BUILD)/%.bochsrc: $(BUILD)/%.img
 	echo "boot: disk" > $@
 #	echo "ata0-master: type=disk, path=$<, mode=flat, cylinders=1, heads=1, spt=1" >> $@
 	echo "ata0-master: type=disk, path=$<, mode=flat" >> $@
-	echo "display_library: $(bochs.display_library)" >> $@
+	echo "display_library: $(bochs_display_library)" >> $@
 	echo "magic_break: enabled=1" >> $@
 
 # 配置 bochs 执行的指令
 ## 默认 debug 模式
-bochsi_mode?=debug
+bochs_command_mode?=debug
 ## 执行模式
-$(BUILD)/%.run.bochsi: $(BUILD)
+$(BUILD)/%.run.bochs.command: $(BUILD)
 	echo "c" > $@
 	echo "q" >> $@
 ## 调试模式
-$(BUILD)/%.debug.bochsi: $(BUILD)
+$(BUILD)/%.debug.bochs.command: $(BUILD)
 	echo "b 0x7c00" > $@
 	echo "c" >> $@
 
 # 运行 hello 案例
 bochs.hello.case: bochs.run.hello;
-bochs.run.%: $(BUILD)/%.bochsrc $(BUILD)/%.$(bochsi_mode).bochsi bochs.copy.%
+bochs.run.%: $(BUILD)/%.bochsrc $(BUILD)/%.$(bochs_command_mode).bochs.command bochs.copy.%
 #	bochs -q -f $< -rc $(word 2,$^) -log $(BUILD)/$*.bochs.log
 	bochs -q -f $< -rc $(word 2,$^)
 

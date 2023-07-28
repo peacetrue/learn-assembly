@@ -12,7 +12,8 @@ jobs:
   build-macos:
     runs-on: macos-latest
     env:
-      bochsi_mode: run
+      bochs_display_library: nogui
+      bochs_command_mode: run
     steps:
       - uses: actions/checkout@v3
       - run: make prepare.install.case
@@ -20,7 +21,8 @@ jobs:
   build-ubuntu:
     runs-on: ubuntu-latest
     env:
-      bochsi_mode: run
+      bochs_display_library: nogui
+      bochs_command_mode: run
     steps:
       - uses: actions/checkout@v3
       - run: make prepare.install.case
