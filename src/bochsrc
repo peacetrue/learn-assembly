@@ -1,0 +1,5 @@
+boot: disk
+ata0-master: type=disk, path="../build/master.img", mode=flat
+#display_library: x, options="gui_debug"
+display_library: sdl2
+magic_break: enabled=1

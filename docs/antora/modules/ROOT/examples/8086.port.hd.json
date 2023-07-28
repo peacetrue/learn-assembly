@@ -1,0 +1,22 @@
+{
+  "title": "主硬盘端口",
+  "blocks": [
+    {
+      "startAddress": "0x1f2",
+      "endAddress": "0x1f3",
+      "description": "读取的扇区数量"
+    },
+    {
+      "startAddress": "0x1f3",
+      "endAddress": "0x1f7",
+      "description": "起始扇区号(小端序)"
+    },
+    {
+      "startAddress": "0x1f7",
+      "endAddress": "0x01f8",
+      "description": "控制及状态端口"
+    }
+  ]
+}
+
+

@@ -1,0 +1,7 @@
+[
+  {
+    "startAddress": "0xB8000",
+    "endAddress": "0xC0000",
+    "description": "显存"
+  }
+]

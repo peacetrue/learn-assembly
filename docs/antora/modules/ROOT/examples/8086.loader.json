@@ -1,0 +1,21 @@
+{
+  "title": "主引导程序内存地址空间",
+  "blocks": [
+    {
+      "startAddress": "0x07C00",
+      "endAddress": "0x07E00",
+      "description": "主引导扇区程序"
+    },
+    {
+      "startAddress": "0x07E00",
+      "endAddress": "0x10000",
+      "description": "栈"
+    },
+    {
+      "startAddress": "0x10000",
+      "endAddress": "0xA0000",
+      "description": "可用空间"
+    }
+  ]
+}
+

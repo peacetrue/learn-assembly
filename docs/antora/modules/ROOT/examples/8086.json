@@ -1,0 +1,20 @@
+{
+  "title": "全部内存地址空间（含映射的端口）",
+  "blocks": [
+    {
+      "startAddress": "0x00000",
+      "endAddress": "0xA0000",
+      "description": "内存 DRAM"
+    },
+    {
+      "startAddress": "0xA0000",
+      "endAddress": "0xF0000",
+      "description": "外围设备端口映射"
+    },
+    {
+      "startAddress": "0xF0000",
+      "endAddress": "0x100000",
+      "description": "只读存储器 ROM-BIOS"
+    }
+  ]
+}

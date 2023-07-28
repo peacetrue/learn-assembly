@@ -1,0 +1,33 @@
+{
+  "title": "0x1F6",
+  "blocks": [
+    {
+      "startAddress": 0,
+      "endAddress": 4,
+      "description": "起始扇区号\n末4位"
+    },
+    {
+      "startAddress": 4,
+      "endAddress": 5,
+      "description": "0: 主硬盘\n1: 从硬盘"
+    },
+    {
+      "startAddress": 5,
+      "endAddress": 6,
+      "description": "1"
+    },
+    {
+      "startAddress": 6,
+      "endAddress": 7,
+      "description": "0: CHS\n1: LBA"
+    },
+    {
+      "startAddress": 7,
+      "endAddress": 8,
+      "description": "1"
+    }
+  ]
+}
+
+
+

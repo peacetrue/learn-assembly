@@ -1,0 +1,23 @@
+{
+  "title": "VHD 虚拟硬盘",
+  "blocks": [
+    {
+      "startAddress": "0",
+      "endAddress": "512",
+      "description": "主引导扇区"
+    },
+    {
+      "startAddress": "512",
+      "endAddress": "1024",
+      "description": "验证标识"
+    },
+    {
+      "startAddress": "512",
+      "endAddress": "1024",
+      "description": "验证标识"
+    }
+  ]
+}
+
+
+

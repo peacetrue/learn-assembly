@@ -1,0 +1,27 @@
+{
+  "title": "独立编址的端口（2 字节 65525）",
+  "blocks": [
+    {
+      "startAddress": "0x0000",
+      "endAddress": "0x170",
+      "description": "其他端口"
+    },
+    {
+      "startAddress": "0x170",
+      "endAddress": "0x178",
+      "description": "副硬盘端口"
+    },
+    {
+      "startAddress": "0x01f0",
+      "endAddress": "0x01f8",
+      "description": "主硬盘端口"
+    },
+    {
+      "startAddress": "0x01f8",
+      "endAddress": "0x10000",
+      "description": "其他端口"
+    }
+  ]
+}
+
+

@@ -1,0 +1,16 @@
+= 快速入门
+
+[source%nowrap,bash,subs=attributes]
+----
+# 检出源码
+git clone https://github.com/peacetrue/{app-name}
+# 进入源码目录
+cd {app-name}
+# 安装 nasm 和 bochs
+make make prepare.install.case
+# 在 bochs 上运行 hello 程序
+make bochs.hello.case
+----
+
+
+
