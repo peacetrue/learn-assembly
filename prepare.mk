@@ -19,7 +19,7 @@ prepare.install.%:
 endif
 
 prepare.check.%: prepare.install.%
-	$* -v
+	$* -h
 
 # 生成帮助文档
 $(prepare.partials)/%.adoc: prepare.install.%
@@ -29,5 +29,5 @@ $(prepare.partials)/%.adoc: prepare.install.%
 	$* -h >> $@
 	echo "----" >> $@
 
-prepare.install.case: prepare.check.nasm prepare.check.bochs;
+prepare.check.case: prepare.check.nasm prepare.check.bochs;
 prepare.case: $(prepare.partials)/nasm.adoc $(prepare.partials)/bochs.adoc $(prepare.partials)/VBoxManage.adoc $(prepare.partials)/objcopy.adoc;
