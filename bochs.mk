@@ -1,5 +1,4 @@
 #使用 bochs 调试程序
-# src/bochsrc bochs 配置详解
 
 # 创建一个磁盘镜像
 $(BUILD)/%.img:
