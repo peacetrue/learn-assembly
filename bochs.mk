@@ -22,11 +22,11 @@ $(BUILD)/%.bochsrc: $(BUILD)/%.img
 ## 默认 debug 模式
 bochsi_mode?=debug
 ## 执行模式
-$(BUILD)/%.run.bochsi:
-	echo "c" >> $@
+$(BUILD)/%.run.bochsi: $(BUILD)
+	echo "c" > $@
 	echo "q" >> $@
 ## 调试模式
-$(BUILD)/%.debug.bochsi:
+$(BUILD)/%.debug.bochsi: $(BUILD)
 	echo "b 0x7c00" > $@
 	echo "c" >> $@
 
