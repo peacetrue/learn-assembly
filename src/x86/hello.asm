@@ -39,6 +39,7 @@ mov cx,(string.end-string)/2; Hello Word 的长度
 rep movsw;重复执行指令 cx 次，每次传输一个字
 ;rep movsw word ptr es:[di], word ptr ds:[si] ; f3a5
 
+xchg bx, bx; bochs magic_break
 jmp $ ;$ 代表当前汇编语句的地址
 
 string:
