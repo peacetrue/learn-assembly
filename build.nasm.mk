@@ -2,6 +2,6 @@
 SRC:=$(SRC)/x86
 
 $(BUILD)/%.bin: $(SRC)/%.asm
-	nasm $< -f bin -o $@
+	nasm $< -f bin -g -o $@
 
 hello.case: $(BUILD)/hello.bin;

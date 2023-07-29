@@ -5,3 +5,7 @@
 == 1.0.0
 
 实现 hello 程序运行在 bochs 上。
+
+== 1.1.0
+
+添加 qemu 支持：`make qemu.hello.debug.case`。

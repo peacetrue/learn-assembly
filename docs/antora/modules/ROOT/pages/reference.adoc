@@ -22,8 +22,9 @@
 . 汇编代码编译器
 .. https://www.nasm.us/[NASM 2.15.05^]
 . 汇编程序运行环境：
-.. https://bochs.sourceforge.io/[Bochs 2.7^]
 .. https://www.virtualbox.org/[VirtualBox 7.0.6^]
+.. https://bochs.sourceforge.io/[Bochs 2.7^]
+.. https://www.qemu.org/[QEMU 7.0.6^]
 . CLion 插件
 .. https://plugins.jetbrains.com/plugin/9759-nasm-assembly-language[NASM assembly language for JetBrains IDEs v0.5-beta.8^]
 .. https://plugins.jetbrains.com/plugin/9339-bined--binary-hexadecimal-editor[Binary/hexadecimal editor plugin 0.2.7^]

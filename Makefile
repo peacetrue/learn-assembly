@@ -5,4 +5,5 @@ include build.common.mk
 include build.nasm.mk
 include vbox.mk
 include bochs.mk
+include qemu.mk
 
