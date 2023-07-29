@@ -1,29 +1,38 @@
 # 准备程序构建运行调试环境
 
-# 安装 brew
-/usr/local/bin/brew:
-	/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+# 查看软件的位置
+prepare.bins:=nasm bochs qemu-system-x86_64
+prepare.locations:
+	@for bin in $(prepare.bins) ; do \
+		echo "$$bin: `which $$bin`"; \
+	done
 
-# 配置 brew
-sudo_pwd?=123456
-$(BUILD)/prepare.brew.config.cache: $(BUILD) /usr/local/bin/brew
-	touch $@
-	yes "$(sudo_pwd)" | sudo -S chown -R `whoami`:admin /usr/local/share
+#软件所处目录
+prepare.bin_dir:=$(if $(is_mac),/usr/local/bin,/usr/bin)
 
 # mac 安装
 ifdef is_mac
-prepare.install.%: $(BUILD)/prepare.brew.config.cache
-	brew install $*
+# 安装 brew
+/usr/local/bin/brew:
+	/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+# 配置 brew
+sudo_pwd?=123456
+$(BUILD)/prepare.brew.cache: $(BUILD) /usr/local/bin/brew
+	touch $@
+	yes "$(sudo_pwd)" | sudo -S chown -R `whoami`:admin /usr/local/share
+
+$(prepare.bin_dir)/%: $(BUILD)/prepare.brew.cache
+	brew install $(subst qemu-system-x86_64,qemu,$*)
 endif
 
 # linux 安装
 ifdef is_linux
-prepare.install.%:
-	sudo apt install $* -y
+$(prepare.bin_dir)/%:
+	sudo apt install $(subst qemu-system-x86_64,qemu,$*) -y
 endif
 
 # 检查安装结果
-prepare.check.%: prepare.install.%
+prepare.check.%: $(prepare.bin_dir)/%
 	$* -h
 
 # 生成帮助文档
@@ -35,7 +44,7 @@ $(prepare.partials)/%.adoc:
 	$* -h >> $@
 	echo "----" >> $@
 
-prepare.check.case: prepare.check.nasm prepare.check.bochs;
+prepare.check.case: $(addprefix prepare.check.,$(prepare.bins));
 prepare.adoc.case: $(prepare.partials)/nasm.adoc \
 	$(prepare.partials)/bochs.adoc \
 	$(prepare.partials)/qemu-system-x86_64.adoc \
