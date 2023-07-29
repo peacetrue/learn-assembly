@@ -1,6 +1,6 @@
 # 准备程序构建运行调试环境
 
-# 查看软件的位置，忽略 Ubuntu 上的 qemu
+# 查看软件的位置，//TODO Ubuntu 上如何安装 qemu
 prepare.bins:=nasm bochs $(if $(is_mac),qemu-system-x86_64,)
 prepare.locations:
 	@for bin in $(prepare.bins) ; do \
